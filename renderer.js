@@ -6,14 +6,16 @@
  * to expose Node.js functionality from the main process.
  */
 
-//add additional status
-//  - img/file etc
+//finish implementing statuses
 
 
 //global system color setting
 //sample text editor input
-//set default character setting
+//default character setting
 //option to hide presets from list
+//transtimeline support for statuses and pms
+//preset editor scrolling
+//font settings
 
 
 //indigo/purple visibility
@@ -26,6 +28,8 @@
 //autoescape transform regexes
 //test editor backing copy
 //advanced options setting?
+//adaptive lowercase
+//copy preset
 
 
 var parser;

@@ -27,7 +27,11 @@
   margin-bottom: -7px;
 }
 
-.st-arg, .st-hex, .st-tag, .st-handle{
+.row-input{
+  margin-bottom: 10px;
+}
+
+.st-arg, .st-hex, .st-tag, .st-handle,{
   padding-top: 15px;
   padding-bottom: 15px;
 }

@@ -65,9 +65,11 @@
 
      <div class="status-view">
        <div class="status-opt" id="status-opt">
-          <textarea id="st-tag" class="tag" type="text" name="com" cols="3" placeholder="tag"></textarea>
-          <textarea id="st-hex" class="hex" type="text" name="com" cols="6" placeholder="hex"></textarea>
-          <textarea id="st-handle" class="hex" type="text" name="com" cols="24" placeholder="handle"></textarea>
+         <div class="row-input">
+            <textarea id="st-tag" class="tag" type="text" name="com" cols="3" placeholder="tag"></textarea>
+            <textarea id="st-hex" class="hex" type="text" name="com" cols="6" placeholder="hex"></textarea>
+            <textarea id="st-handle" class="hex" type="text" name="com" cols="24" placeholder="handle"></textarea>
+          </div>
 
           <div class="st-arg"> OR <select id="st-preset">
             <option value="" selected="selected">select</option>
@@ -84,6 +86,12 @@
             <select id="mood-sel">
             </select> OR
             <textarea id="mood-input" class="tag" type="text" name="com" cols="16" placeholder="mood"></textarea>
+          </div>
+
+          <div id="file-opt" class="file-opt">
+            <div class="row-input"><textarea id="fileform-input" class="tag" type="text" name="com" cols="16" placeholder="file.txt"></textarea></div>
+            <div class="row-input"><textarea id="filelink-input" class="tag" type="text" name="com" cols="40" placeholder="link (optional)"></textarea></div>
+            <div class="row-input">> <textarea id="filedesc-input" class="tag" type="text" name="com" rows="4" cols="40" placeholder="description para (optional)"></textarea></div>
           </div>
 
        <div id="status-prev" class="status-prev"></div>

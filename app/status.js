@@ -20,6 +20,10 @@ var current = 'ONLINE';
 var keyverb = 'pester'
 var mood = '';
 
+var fileform = '';
+var filelink = '';
+var filedesc = '';
+
 var statuses = {
   "ONLINE":  msg_online,
   "OFFLINE": msg_offline,
@@ -32,8 +36,12 @@ var statuses = {
   "MSG ACCEPT" : msg_accept,
   "BLOCK" : msg_block,
   "UNBLOCK": msg_unblock,
-  "SHARE FILE" : msg_file
-
+  "SHARE FILE" : msg_file,
+  "DEVICE EXPLODED": msg_explode,
+  "MEMO INVITE": msg_invite,
+  "MEMO JOIN": msg_join,
+  "CHANGE HANDLE": msg_change,
+  "CUSTOM": msg_custom
 };
 
 var moods = ["CHUMMY", "CHIPPER", "PALSY", "BULLY", "PEPPY", "RANCOROUS", "MYSTIFIED",
@@ -45,6 +53,7 @@ var moods = ["CHUMMY", "CHIPPER", "PALSY", "BULLY", "PEPPY", "RANCOROUS", "MYSTI
 var st_opt = document.getElementById("status-opt");
 var ks_opt = document.getElementById("ks-opt");
 var mood_opt = document.getElementById("mood-opt");
+var file_opt = document.getElementById("file-opt");
 
 //assembles reusable message components
 function msg_comp(config, context)
@@ -52,6 +61,8 @@ function msg_comp(config, context)
   st_opt.style.display = "none";
   ks_opt.style.display = "none";
   mood_opt.style.display = "none";
+  file_opt.style.display = "none";
+
   color_tag = "[color=#" + config.hex + "]";
   context_tag = "[color=#" + context.hex + "]";
   handle = color_tag + config.handle + close_tag;
@@ -63,12 +74,6 @@ function msg_comp(config, context)
 }
 
 function list_status(parser){
-
-  //device exploded
-  //invited to memo
-  //joined for the first time
-  //custom
-
 
   p = parser;
 
@@ -82,6 +87,10 @@ function list_status(parser){
 
   var m1 = document.getElementById("mood-sel");
   var m2 = document.getElementById("mood-input");
+
+  var f1 = document.getElementById("fileform-input");
+  var f2 = document.getElementById("filelink-input");
+  var f3 = document.getElementById("filedesc-input");
 
 
   let keyverbs = ['pester', 'troll', 'jeer', 'cheer'];
@@ -114,6 +123,21 @@ function list_status(parser){
 
   m2.oninput = function update(){
     mood = m2.value;
+    refresh();
+  }
+
+  f1.oninput = function update(){
+    fileform = f1.value;
+    refresh();
+  }
+
+  f2.oninput = function update(){
+    filelink = f2.value;
+    refresh();
+  }
+
+  f3.oninput = function update(){
+    filedesc = f3.value;
     refresh();
   }
 
@@ -209,7 +233,7 @@ function msg_offidle(){
 
 
 
-// -- x [XX] began pestering y [YY]! --
+// -- x [XX] began pestering y [YY] --
 function msg_start(){
   msg_comp(p.config, p.context);
   ks_opt.style.display = "block";
@@ -217,19 +241,19 @@ function msg_start(){
   var res = [];
   res[0] = color_black + "-- " + close_tag + user + color_black +
   " began " + keyverb + "ing " + close_tag + user2 +
-  color_black + "!  --" + close_tag;
+  color_black + "  --" + close_tag;
 
   if(p.context.com != "")
   res[0] = p.context.com + " " + res[0];
 
   res[1] = `-- ${p.config.handle} [${p.config.acronym}] \
-  began ${keyverb}ing ${p.context.sc} [${p.context.tag}]! --`;
+  began ${keyverb}ing ${p.context.sc} [${p.context.tag}] --`;
 
   return res;
 }
 
 
-// -- x [XX] ceased pestering y [YY]! --
+// -- x [XX] ceased pestering y [YY] --
 function msg_end(config, context){
   msg_comp(p.config, p.context);
   ks_opt.style.display = "block";
@@ -237,13 +261,13 @@ function msg_end(config, context){
   var res = [];
   res[0] = color_black + "-- " + close_tag + user + color_black +
   " ceased " + keyverb + "ing " + close_tag + user2 +
-  color_black + "!  --" + close_tag;
+  color_black + "  --" + close_tag;
 
   if(p.context.com != "")
   res[0] = p.context.com + " " + res[0];
 
   res[1] = `-- ${p.config.handle} [${p.config.acronym}] \
-  ceased ${keyverb}ing ${p.context.sc} [${p.context.tag}]! --`;
+  ceased ${keyverb}ing ${p.context.sc} [${p.context.tag}] --`;
 
   return res;
 }
@@ -264,48 +288,48 @@ function set_mood(config, context){
   return res;
 }
 
-// -- x [XX] is requesting to pester y [YY]! --
+// -- x [XX] REQUESTED to pester y [YY] --
 function msg_request(config, context){
   msg_comp(p.config, p.context);
   st_opt.style.display = "block";
   ks_opt.style.display = "block";
   var res = [];
-  res[0] = color_black + "-- " + close_tag + user + color_black + " requested to " + keyverb + " " + user2 + "! --" + close_tag;
+  res[0] = color_black + "-- " + close_tag + user + color_black + " REQUESTED to " + keyverb + " " + user2 + " --" + close_tag;
 
   if(p.context.com != "")
   res[0] = p.context.com + " " + res[0];
 
-  res[1] = `-- ${p.config.handle} [${p.config.acronym}] requested to ${keyverb} ${p.context.sc} [${p.context.tag}]! --`;
+  res[1] = `-- ${p.config.handle} [${p.config.acronym}] REQUESTED to ${keyverb} ${p.context.sc} [${p.context.tag}] --`;
 
   return res;
 }
 
-// -- x [XX] accepted y [YY]'s request'! --
+// -- x [XX] ACCEPTED y [YY]'s request --
 function msg_accept(config, context){
   msg_comp(p.config, p.context);
   st_opt.style.display = "block";
   var res = [];
-  res[0] = color_black + "-- " + close_tag + user + color_black + " accepted " + user2 + "'s request! --" + close_tag;
+  res[0] = color_black + "-- " + close_tag + user + color_black + " accepted " + user2 + "'s request --" + close_tag;
 
   if(p.context.com != "")
   res[0] = p.context.com + " " + res[0];
 
-  res[1] = `-- ${p.config.handle} [${p.config.acronym}] accepted ${p.context.sc} [${p.context.tag}]'s request! --`;
+  res[1] = `-- ${p.config.handle} [${p.config.acronym}] ACCEPTED ${p.context.sc} [${p.context.tag}]'s request --`;
 
   return res;
 }
 
-// -- x [XX] blocked y [YY]! --
+// -- x [XX] blocked y [YY] --
 function msg_block(config, context){
   msg_comp(p.config, p.context);
   st_opt.style.display = "block";
   var res = [];
-  res[0] = color_black + "-- " + close_tag + user + color_black + " blocked " + user2 + "! --" + close_tag;
+  res[0] = color_black + "-- " + close_tag + user + color_black + " blocked " + user2 + " --" + close_tag;
 
   if(p.context.com != "")
   res[0] = p.context.com + " " + res[0];
 
-  res[1] = `-- ${p.config.handle} [${p.config.acronym}] blocked ${p.context.sc} [${p.context.tag}]! --`;
+  res[1] = `-- ${p.config.handle} [${p.config.acronym}] blocked ${p.context.sc} [${p.context.tag}] --`;
 
   return res;
 }
@@ -315,26 +339,128 @@ function msg_unblock(config, context){
   msg_comp(p.config, p.context);
   st_opt.style.display = "block";
   var res = [];
-  res[0] = color_black + "-- " + close_tag + user + color_black + " unblocked " + user2 + "! --" + close_tag;
+  res[0] = color_black + "-- " + close_tag + user + color_black + " unblocked " + user2 + " --" + close_tag;
 
   if(p.context.com != "")
   res[0] = p.context.com + " " + res[0];
 
-  res[1] = `-- ${p.config.handle} [${p.config.acronym}] unblocked ${p.context.sc} [${p.context.tag}]! --`;
+  res[1] = `-- ${p.config.handle} [${p.config.acronym}] unblocked ${p.context.sc} [${p.context.tag}] --`;
 
   return res;
 }
 
-// -- x [XX] shared an image "???" --
+// -- x [XX] shared a file: "???" --
 function msg_file(config, context){
   msg_comp(p.config, p.context);
+  file_opt.style.display = "block";
   var res = [];
-  res[0] = color_black + "-- " + close_tag + user + color_black + " shared a file: " + "! --" + close_tag;
+  var fileset = '';
+  var paradesc = '';
+
+  if (filelink != '')
+    fileset = '[url=' + filelink + ']' + fileform + '[/url]';
+  else fileset = fileform;
+
+  if(filedesc != '')
+    paradesc = '[br]  [br]' + color_tag + '>' + close_tag + " " + color_black  + filedesc + close_tag;
+
+
+  res[0] = color_black + "-- " + close_tag + user + color_black + " shared a file: "
+  + fileset + "! --" + close_tag + paradesc;
 
   if(p.context.com != "")
   res[0] = p.context.com + " " + res[0];
 
-  res[1] = `-- ${p.config.handle} [${p.config.acronym}] shared a file: ! --`;
+
+
+  res[1] = `-- ${p.config.handle} [${p.config.acronym}] shared a file: ${fileform} --`
+
+  if (filedesc != '')
+    res[1] = res[1] + `<br><br>> ${filedesc}`;
+
+
+  return res;
+}
+
+//-- x [XX]'s device exploded! --
+function msg_explode(config, context){
+  msg_comp(p.config, p.context);
+  //file_opt.style.display = "block";
+  var res = [];
+
+  res[0] = color_black + "-- " + close_tag + user + color_black + "'s device exploded! --" + close_tag;
+
+  if(p.context.com != "")
+  res[0] = p.context.com + " " + res[0];
+
+  res[1] = `-- ${p.config.handle} [${p.config.acronym}]'s device exploded! --`
+
+  return res;
+}
+
+//-- x [XX] invited y [yy] to board: ???
+function msg_invite(config, context){
+  msg_comp(p.config, p.context);
+  //file_opt.style.display = "block";
+  var res = [];
+
+  res[0] = color_black + "-- " + close_tag + user + color_black + " invited " + user2 + " to board: ??? --" + close_tag;
+
+  if(p.context.com != "")
+  res[0] = p.context.com + " " + res[0];
+
+  res[1] = `-- ${p.config.handle} [${p.config.acronym}] invited ${p.context.sc} [${p.context.tag}] to board: ??? --`;
+
+  return res;
+}
+
+//-- x [XX] responded to memo on board: ??? --
+//-- x [XX] responded to memo RIGHT NOW --
+//-- x [XX] responded to memo ?? HOURS AGO --
+function msg_join(config, context){
+  msg_comp(p.config, p.context);
+  //file_opt.style.display = "block";
+  var res = [];
+
+  res[0] = color_black + "-- " + close_tag + user + color_black + " responded to memo RIGHT NOW --" + close_tag;
+
+  if(p.context.com != "")
+  res[0] = p.context.com + " " + res[0];
+
+  res[1] = `-- ${p.config.handle} [${p.config.acronym}] responded to memo RIGHT NOW --`;
+
+  return res;
+}
+
+// -- x [XX] is now y [yy] --
+function msg_change(config, context){
+  msg_comp(p.config, p.context);
+  //file_opt.style.display = "block";
+  var res = [];
+
+  res[0] = color_black + "-- " + close_tag + user + color_black + " is now " + user2 + " --" + close_tag;
+
+  if(p.context.com != "")
+  res[0] = p.context.com + " " + res[0];
+
+  res[1] = `-- ${p.config.handle} [${p.config.acronym}] is now ${p.context.sc} [${p.context.tag}] --`;
+
+  return res;
+}
+
+// -- x [XX] ???? --
+// -- x [XX] ??? y [yy] --
+function msg_custom(config, context){
+  msg_comp(p.config, p.context);
+  //file_opt.style.display = "block";
+  var res = [];
+
+  res[0] = color_black + "-- " + close_tag + user + color_black + " ??? --" + close_tag;
+
+  if(p.context.com != "")
+  res[0] = p.context.com + " " + res[0];
+
+  res[1] = `-- ${p.config.handle} [${p.config.acronym}] ??? --`;
 
   return res;
 }
