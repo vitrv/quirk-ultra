@@ -1,3 +1,82 @@
-/* styles.css */
+* {
+  background-color: #111111;
+  color: #ffffff;
+  font-family: monospace;
 
-/* Add styles here to customize the appearance of your app */
+}
+
+.style-header {
+  height: 50px;
+  padding:10px;
+  color: #707070;
+  font-style: italic;
+}
+
+.style-opt{
+  padding-bottom: 5px;
+}
+
+.sampletext{
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.com, .tag, .hex{
+  height: 15px;
+  margin-top: -7px;
+  margin-bottom: -7px;
+}
+
+.st-arg, .st-hex, .st-tag, .st-handle{
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+
+.library-bar {
+  width: 20%;
+  padding-left:10px;
+  float: left;
+  height: 500px;
+}
+
+.library-bar, .library, .library-item {
+  background-color: #252525;
+}
+
+.library-heading {
+  margin-top: 10px;
+  background-color: #303030;
+}
+
+.library-item:hover {
+  background-color: #000000;
+}
+
+
+.status-view {
+  width: 50%;
+  float: left;
+  padding: 10px;
+}
+
+.status-prev, .status-code{
+  padding-top: 20px;
+  padding-bottom: 20px;
+
+}
+
+.editor {
+  width: 50%;
+  float: left;
+  padding: 40px;
+  margin: 10px;
+  border-style: solid;
+  border-color: #ffffff;
+  border-width: thin;
+}
+
+.editor-row {
+  width: 100%;
+  float: none;
+}

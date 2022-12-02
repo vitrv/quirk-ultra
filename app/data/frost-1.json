@@ -1,0 +1,65 @@
+{
+  "presets": [
+    {
+      "id":"ETILEA",
+      "name":"ETILEA",
+      "handle":"vicariousTelegnosis",
+      "acronym":"VT",
+      "hex":"088880",
+      "transformations": [
+        ["o","O"]
+      ],
+      "format":">>> ${t} <<<",
+      "case": "NONE",
+      "sampletext": "the quick brown fox jumps over the lazy dog."
+    },
+
+    {
+      "id":"ZELTER",
+      "name":"ZELTER",
+      "handle":"jauntyCyclonic",
+      "acronym":"JC",
+      "hex":"5111af",
+      "transformations": [
+        ["n","n°"],
+        ["N","N°"]
+      ],
+      "format":"{ ${t} }",
+      "case": "NONE"
+    },
+
+    {
+      "id":"KALIAS",
+      "name":"KALIAS",
+      "handle":"visceralNeology",
+      "acronym":"VN",
+      "hex":"00508b",
+      "transformations": [
+        ["C","Ȼ"],
+        ["c","ȼ"],
+        ["0","O"],
+        ["1","l"]
+      ],
+      "format":"${t}",
+      "case": "TITLE"
+    },
+
+    {
+      "id":"HIVRIS",
+      "name":"HIVRIS",
+      "handle":"gnashingGigantis",
+      "acronym":"GG",
+      "hex":"bfb300",
+      "transformations": [
+        ["O","0"],
+        ["A","4"],
+        ["G","6"],
+        ["o","0"],
+        ["a","4"],
+        ["g","6"]
+      ],
+      "format":"${t}",
+      "case": "ALL"
+    }
+  ]
+}

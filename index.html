@@ -5,15 +5,160 @@
     <!-- https://developer.mozilla.org/en-US/docs/Web/HTTP/CSP -->
     <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'">
     <link href="./styles.css" rel="stylesheet">
-    <title>Hello World!</title>
+    <title>Quirk Ultra</title>
   </head>
   <body>
-    <h1>Hello World!</h1>
-    We are using Node.js <span id="node-version"></span>,
-    Chromium <span id="chrome-version"></span>,
-    and Electron <span id="electron-version"></span>.
+    <div id="navbar">
+      <button id="nav-main">MAIN</button>
+      <button id="nav-status">STATUS</button>
+      <button id="nav-preset">PRESETS</button>
+      <button id="nav-settings">SETTINGS</button>
+    </div>
+
+    <div id="tab-main">
+      <div id="toolbar">
+        <select name="preset" id="preset">
+          <option value="" selected="selected">select</option>
+        </select>
+
+        <select name="style" id="style">
+          <option value="" selected="selected">select</option>
+        </select>
+
+      </div>
+
+      <div id="infobar">
+        <div class="style-header" id="styleheader">
+        </div>
+
+         <div class="style-opt" id="style-opt">
+            <textarea id="tag" class="tag" type="text" name="com" cols="3" placeholder="tag"></textarea>
+            <textarea id="hex" class="hex" type="text" name="com" cols="6" placeholder="hex"></textarea>
+            OR <select class="msg-arg" name="arg-preset" id="arg-preset">
+              <option value="" selected="selected">select</option>
+            </select>
+          </div>
+
+          <div class="style-opt" id="style-opt2">
+             <textarea id="bbcode-opt" class="tag" type="text" name="com" cols="30" placeholder="bbcode"></textarea>
+           </div>
+
+      </div>
+
+      <div class="input-frame" id="input-text">
+        <textarea id="text" name="text" rows="10" cols="90" placeholder="write here"></textarea>
+      </div>
+
+      <div class="output-frame" id="output-text">
+        <textarea id=output rows="10" cols="90" readonly> </textarea>
+      </div>
+      <textarea id="com" class="com" type="text" name="com" cols="3" placeholder="/"></textarea>
+      <button id="copy">copy</button>
+   </div>
+
+   <div id="tab-status">
+     <div class="library-bar">
+       <p class="library-heading"> STATUS MESSAGES</p>
+       <div class="library" id="status-lib">
+       </div>
+     </div>
+
+     <div class="status-view">
+       <div class="status-opt" id="status-opt">
+          <textarea id="st-tag" class="tag" type="text" name="com" cols="3" placeholder="tag"></textarea>
+          <textarea id="st-hex" class="hex" type="text" name="com" cols="6" placeholder="hex"></textarea>
+          <textarea id="st-handle" class="hex" type="text" name="com" cols="24" placeholder="handle"></textarea>
+
+          <div class="st-arg"> OR <select id="st-preset">
+            <option value="" selected="selected">select</option>
+          </select></div>
+          </div>
+
+          <div id="ks-opt" class="ks-opt">
+            <select id="keyverb-sel">
+            </select> OR
+            <textarea id="keyverb-input" class="tag" type="text" name="com" cols="16" placeholder="keyverb"></textarea>
+          </div>
+
+          <div id="mood-opt" class="mood-opt">
+            <select id="mood-sel">
+            </select> OR
+            <textarea id="mood-input" class="tag" type="text" name="com" cols="16" placeholder="mood"></textarea>
+          </div>
+
+       <div id="status-prev" class="status-prev"></div>
+       <div class="status-code"><textarea id="status-code" name="text" rows="4" cols="40" readonly></textarea></div>
+       <button id="copy-status">copy</button>
+    </div>
+  </div>
+   <div id="tab-preset">
+
+     <div class="library-bar">
+     <p class="library-item" id="new-preset"> + </p>
+     <p class="library-heading"> LOADED PRESETS</p>
+     <div class="library" id="library">
+
+       </div>
+     </div>
+
+     <div class="editor" id="editor">
+     <div class="editor-row">
+       ID: <input id="id-input" type="text" name="id" size="24">
+     </div>
+     <div class="editor-row">
+       NAME: <input id="name-input" type="text" name="name" size="8">
+     </div>
+     <div class="editor-row">
+       HANDLE: <input id="handle-input" type= "text" name="handle" size="24">
+     </div>
+     <div class="editor-row">
+       ACRONYM: <input id="acro-input" type="text" name="acronym" size="3">
+       HEXCODE: <input id="hex-input" type="text" name="hex" size="6">
+     </div>
+     <div class="editor-row">
+       PREFIX: <input id="prefix-input" type="text" name="pre" size="6">
+       SUFFIX: <input id="suffix-input" type="text" name="suf" size="6">
+     </div>
+     <div class="editor-row">
+       CAPITALIZATION:
+       <select id="case-input" name="case">
+         <option value="" selected="selected">select</option>
+       </select>
+     </div>
+     <span class="editor-row">
+        TRANSFORMATIONS
+       <div id="transform-input">
+
+       </div>
+     </span>
+
+     <div class="tf-buttons">
+       <button id="add-transform-row">+</button>
+       <button id="del-transform-row">-</button>
+     </div>
+
+     <div id="sampletext" class="sampletext">
+     </div>
+
+     <div>
+       <button id="save-preset">save</button>
+       <button id="del-preset">delete</button>
+     </div>
+     </div>
+
+   </div>
+
+   <div id="tab-settings">
+     SETTINGS UNIMPLEMENTED
+   </div>
 
     <!-- You can also require other files to run in this process -->
+
+    <script src="./app/status.js"></script>
+    <script src="./app/style.js"></script>
+    <script src="./app/case.js"></script>
+    <script src="./app/loader.js"></script>
+    <script src="./app/parser.js"></script>
     <script src="./renderer.js"></script>
   </body>
 </html>
