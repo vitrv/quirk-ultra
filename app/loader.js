@@ -35,6 +35,9 @@ function load_preset(set, library){
 
   let preset = new Base(set.id, set.name, set.handle, set.acronym, set.hex);
   preset.format = set.format;
+  if(set.visibility != null){
+    preset.visibility = set.visibility;
+  }
   if(set.sampletext != null)
   {
     preset.sampletext = set.sampletext;
@@ -91,7 +94,9 @@ async function save_preset(library){
           "transformations": write_transform(set.transformations),
           "format": set.format,
           "case": write_case(set.case),
-          "sampletext": set.sampletext
+          "sampletext": set.sampletext,
+          "visibility": set.visibility
+
     };
     content.presets.push(entry);
   }

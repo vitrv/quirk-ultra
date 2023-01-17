@@ -43,6 +43,7 @@ class Base {
     this.sampletext = "The quick brown fox jumps over the lazy dog."
     this.ref = "";
     this.active = true;
+    this.visibility = false;
   }
 
 

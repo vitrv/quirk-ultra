@@ -24,6 +24,12 @@ var fileform = '';
 var filelink = '';
 var filedesc = '';
 
+var device_act = 'exploded!';
+
+var board_name = '???';
+
+var custom_text = '';
+
 var statuses = {
   "ONLINE":  msg_online,
   "OFFLINE": msg_offline,
@@ -38,6 +44,8 @@ var statuses = {
   "UNBLOCK": msg_unblock,
   "SHARE FILE" : msg_file,
   "DEVICE EXPLODED": msg_explode,
+  "BOARD CREATE": msg_board,
+  "MEMO OPEN": msg_memo,
   "MEMO INVITE": msg_invite,
   "MEMO JOIN": msg_join,
   "CHANGE HANDLE": msg_change,
@@ -54,6 +62,9 @@ var st_opt = document.getElementById("status-opt");
 var ks_opt = document.getElementById("ks-opt");
 var mood_opt = document.getElementById("mood-opt");
 var file_opt = document.getElementById("file-opt");
+var dev_opt = document.getElementById("dev-opt");
+var memo_opt = document.getElementById("memo-opt");
+var cust_opt = document.getElementById("cust-opt");
 
 //assembles reusable message components
 function msg_comp(config, context)
@@ -62,6 +73,9 @@ function msg_comp(config, context)
   ks_opt.style.display = "none";
   mood_opt.style.display = "none";
   file_opt.style.display = "none";
+  dev_opt.style.display = "none";
+  memo_opt.style.display = "none";
+  cust_opt.style.display = "none";
 
   color_tag = "[color=#" + config.hex + "]";
   context_tag = "[color=#" + context.hex + "]";
@@ -91,6 +105,12 @@ function list_status(parser){
   var f1 = document.getElementById("fileform-input");
   var f2 = document.getElementById("filelink-input");
   var f3 = document.getElementById("filedesc-input");
+
+  var dv = document.getElementById("dev-input");
+
+  var mem = document.getElementById("memo-input");
+
+  var cust = document.getElementById("cust-input");
 
 
   let keyverbs = ['pester', 'troll', 'jeer', 'cheer'];
@@ -138,6 +158,29 @@ function list_status(parser){
 
   f3.oninput = function update(){
     filedesc = f3.value;
+    refresh();
+  }
+
+  dv.oninput = function update(){
+    if(dv.value == '')
+      device_act = 'exploded!';
+    else
+      device_act = dv.value;
+
+    refresh();
+  }
+
+  mem.oninput = function update(){
+    if(mem.value == '')
+      board_name = '???';
+    else
+      board_name = mem.value;
+
+    refresh();
+  }
+
+  cust.oninput = function update(){
+    custom_text = cust.value;
     refresh();
   }
 
@@ -294,7 +337,7 @@ function msg_request(config, context){
   st_opt.style.display = "block";
   ks_opt.style.display = "block";
   var res = [];
-  res[0] = color_black + "-- " + close_tag + user + color_black + " REQUESTED to " + keyverb + " " + user2 + " --" + close_tag;
+  res[0] = color_black + "-- " + close_tag + user + color_black + " REQUESTED to " + keyverb + " " + close_tag + user2 + color_black + " --" + close_tag;
 
   if(p.context.com != "")
   res[0] = p.context.com + " " + res[0];
@@ -309,7 +352,7 @@ function msg_accept(config, context){
   msg_comp(p.config, p.context);
   st_opt.style.display = "block";
   var res = [];
-  res[0] = color_black + "-- " + close_tag + user + color_black + " accepted " + user2 + "'s request --" + close_tag;
+  res[0] = color_black + "-- " + close_tag + user + color_black + " accepted " + close_tag + user2 + color_black + "'s request --" + close_tag;
 
   if(p.context.com != "")
   res[0] = p.context.com + " " + res[0];
@@ -324,7 +367,7 @@ function msg_block(config, context){
   msg_comp(p.config, p.context);
   st_opt.style.display = "block";
   var res = [];
-  res[0] = color_black + "-- " + close_tag + user + color_black + " blocked " + user2 + " --" + close_tag;
+  res[0] = color_black + "-- " + close_tag + user + color_black + " blocked " + close_tag + user2 + color_black + " --" + close_tag;
 
   if(p.context.com != "")
   res[0] = p.context.com + " " + res[0];
@@ -339,7 +382,7 @@ function msg_unblock(config, context){
   msg_comp(p.config, p.context);
   st_opt.style.display = "block";
   var res = [];
-  res[0] = color_black + "-- " + close_tag + user + color_black + " unblocked " + user2 + " --" + close_tag;
+  res[0] = color_black + "-- " + close_tag + user + color_black + " unblocked " + close_tag + user2 + color_black + " --" + close_tag;
 
   if(p.context.com != "")
   res[0] = p.context.com + " " + res[0];
@@ -350,6 +393,7 @@ function msg_unblock(config, context){
 }
 
 // -- x [XX] shared a file: "???" --
+// -- x [XX] shared a file with y [yy]: "???" --
 function msg_file(config, context){
   msg_comp(p.config, p.context);
   file_opt.style.display = "block";
@@ -385,15 +429,47 @@ function msg_file(config, context){
 //-- x [XX]'s device exploded! --
 function msg_explode(config, context){
   msg_comp(p.config, p.context);
-  //file_opt.style.display = "block";
+  dev_opt.style.display = "block";
   var res = [];
 
-  res[0] = color_black + "-- " + close_tag + user + color_black + "'s device exploded! --" + close_tag;
+  res[0] = color_black + "-- " + close_tag + user + color_black + "'s device "  + device_act + " --" + close_tag;
 
   if(p.context.com != "")
   res[0] = p.context.com + " " + res[0];
 
-  res[1] = `-- ${p.config.handle} [${p.config.acronym}]'s device exploded! --`
+  res[1] = `-- ${p.config.handle} [${p.config.acronym}]'s device ${device_act} --`
+
+  return res;
+}
+
+//-- x [XX] created a board: ??? --
+function msg_board(config, context){
+  msg_comp(p.config, p.context);
+  memo_opt.style.display = "block";
+  var res = [];
+
+  res[0] = color_black + "-- " + close_tag + user + color_black + " created a board: "+ board_name + " --" + close_tag;
+
+  if(p.context.com != "")
+  res[0] = p.context.com + " " + res[0];
+
+  res[1] = `-- ${p.config.handle} [${p.config.acronym}] created a board: ${board_name} --`;
+
+  return res;
+}
+
+//-- x [XX] opened a memo on board: ??? --
+function msg_memo(config, context){
+  msg_comp(p.config, p.context);
+  memo_opt.style.display = "block";
+  var res = [];
+
+  res[0] = color_black + "-- " + close_tag + user + color_black + " opened a memo on board: "+ board_name + " --" + close_tag;
+
+  if(p.context.com != "")
+  res[0] = p.context.com + " " + res[0];
+
+  res[1] = `-- ${p.config.handle} [${p.config.acronym}] opened a memo on board: ${board_name} --`;
 
   return res;
 }
@@ -401,33 +477,38 @@ function msg_explode(config, context){
 //-- x [XX] invited y [yy] to board: ???
 function msg_invite(config, context){
   msg_comp(p.config, p.context);
-  //file_opt.style.display = "block";
+  st_opt.style.display = "block";
+  memo_opt.style.display = "block";
   var res = [];
 
-  res[0] = color_black + "-- " + close_tag + user + color_black + " invited " + user2 + " to board: ??? --" + close_tag;
+  res[0] = color_black + "-- " + close_tag + user + color_black + " invited " + close_tag + user2 + color_black + " to board: "+ board_name + " --" + close_tag;
 
   if(p.context.com != "")
   res[0] = p.context.com + " " + res[0];
 
-  res[1] = `-- ${p.config.handle} [${p.config.acronym}] invited ${p.context.sc} [${p.context.tag}] to board: ??? --`;
+  res[1] = `-- ${p.config.handle} [${p.config.acronym}] invited ${p.context.sc} [${p.context.tag}] to board: ${board_name} --`;
 
   return res;
 }
 
 //-- x [XX] responded to memo on board: ??? --
 //-- x [XX] responded to memo RIGHT NOW --
-//-- x [XX] responded to memo ?? HOURS AGO --
+//-- x [XX] responded to memo ?? HOURS AGO -- (only for transtimeline function)
 function msg_join(config, context){
   msg_comp(p.config, p.context);
-  //file_opt.style.display = "block";
+  memo_opt.style.display = "block";
   var res = [];
 
-  res[0] = color_black + "-- " + close_tag + user + color_black + " responded to memo RIGHT NOW --" + close_tag;
+  if (board_name != "???")
+    res[0] = color_black + "-- " + close_tag + user + color_black + " responded to memo on board: " + board_name + " --" + close_tag;
+  else res[0] = color_black + "-- " + close_tag + user + color_black + " responded to the memo RIGHT NOW --" + close_tag;
 
   if(p.context.com != "")
   res[0] = p.context.com + " " + res[0];
 
-  res[1] = `-- ${p.config.handle} [${p.config.acronym}] responded to memo RIGHT NOW --`;
+  if (board_name != "???")
+    res[1] = `-- ${p.config.handle} [${p.config.acronym}] responded to memo on board: ${board_name} --`;
+  else res[1] = `-- ${p.config.handle} [${p.config.acronym}] responded to the memo RIGHT NOW --`;
 
   return res;
 }
@@ -435,10 +516,10 @@ function msg_join(config, context){
 // -- x [XX] is now y [yy] --
 function msg_change(config, context){
   msg_comp(p.config, p.context);
-  //file_opt.style.display = "block";
+  st_opt.style.display = "block";
   var res = [];
 
-  res[0] = color_black + "-- " + close_tag + user + color_black + " is now " + user2 + " --" + close_tag;
+  res[0] = color_black + "-- " + close_tag + user + color_black + " is now " + close_tag + user2 + color_black + " --" + close_tag;
 
   if(p.context.com != "")
   res[0] = p.context.com + " " + res[0];
@@ -452,15 +533,15 @@ function msg_change(config, context){
 // -- x [XX] ??? y [yy] --
 function msg_custom(config, context){
   msg_comp(p.config, p.context);
-  //file_opt.style.display = "block";
+  cust_opt.style.display = "block";
   var res = [];
 
-  res[0] = color_black + "-- " + close_tag + user + color_black + " ??? --" + close_tag;
+  res[0] = color_black + "-- " + close_tag + user + color_black + " " + custom_text + " --" + close_tag;
 
   if(p.context.com != "")
   res[0] = p.context.com + " " + res[0];
 
-  res[1] = `-- ${p.config.handle} [${p.config.acronym}] ??? --`;
+  res[1] = `-- ${p.config.handle} [${p.config.acronym}] ${custom_text} --`;
 
   return res;
 }

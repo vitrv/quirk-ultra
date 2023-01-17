@@ -16,7 +16,8 @@
   padding-bottom: 5px;
 }
 
-.sampletext{
+.sampletext, .ks-opt, .file-opt, .mood-opt, .status-opt, .dev-opt,
+ .memo-opt, .cust-opt{
   padding-top: 15px;
   padding-bottom: 15px;
 }

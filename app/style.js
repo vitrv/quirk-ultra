@@ -101,7 +101,8 @@ class BBMemoStyle extends Style {
     let coltag2 = " [/color]";
 
     lineArr.forEach((item, i) => {
-      lineArr[i] = lineArr[i] + '[br]'
+      if(i != lineArr.length - 1)
+        lineArr[i] = lineArr[i] + '[br]'
       if(i == lineArr.length-1)
       {
         lineArr[i] =  lineArr[i] + coltag2;
@@ -228,10 +229,6 @@ class BlockStyle extends Style {
 
     lineArr.forEach((item, i) => {
 
-      if(i != 0)
-      {
-        lineArr[i] = config.acronym + ": "  + lineArr[i];
-      }
       if(i != lineArr.length-1)
       {
         lineArr[i] = lineArr[i] + '[br]';
@@ -244,7 +241,7 @@ class BlockStyle extends Style {
   }
 
   transform(line, b, context){
-    return line;
+    return b.acronym + ": " + line;
   }
 }
 

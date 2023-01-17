@@ -6,30 +6,32 @@
  * to expose Node.js functionality from the main process.
  */
 
-//finish implementing statuses
-
+//validation for preset ids
+//add hex to memo board statuses
+//add optional second user to file share and custom statuses
+//server requested/accepted
+//separate or link com and com2 inputs
 
 //global system color setting
 //sample text editor input
 //default character setting
 //option to hide presets from list
-//transtimeline support for statuses and pms
 //preset editor scrolling
 //font settings
+//user manual/readme
+//packaging
 
-
-//indigo/purple visibility
 //display preview/ display color parser
 //choose loaderfile
 //ref image support
 //para editor?
-//validation for preset ids
 //set default character
 //autoescape transform regexes
 //test editor backing copy
 //advanced options setting?
 //adaptive lowercase
 //copy preset
+//transtimeline support for statuses and pms
 
 
 var parser;
@@ -41,7 +43,10 @@ var parser_n;
 function updateOutput() {
    var out = document.getElementById("output");
    out.innerHTML = parser.transform(textbox.value);
-   out.style.color = '#' + parser.config.hex;
+   if(parser.config.visibility == true)
+     out.style.color = '#' + vis_correct(parser.config.hex);
+
+   else out.style.color = '#' + parser.config.hex;
 
 }
 
@@ -50,6 +55,13 @@ function copy_text() {
   copyText.select();
   copyText.setSelectionRange(0, 99999);
   document.execCommand("copy");
+}
+
+function vis_correct(c) {
+  var correction = '404040';
+  var hexStr = (parseInt(c, 16) + parseInt(correction, 16)).toString(16);
+  while (hexStr.length < 6) { hexStr = '0' + hexStr; } // Zero pad.
+  return hexStr;
 }
 
 function tab_swap() {
@@ -94,6 +106,7 @@ function update_editor(){
     parser_n.config.case = Object.create(set.case);
     parser_n.config.format = set.format;
     parser_n.config.sampletext = set.sampletext;
+    parser_n.config.visibility = set.visibility;
     parser_n.config.ref = set.ref;
     parser_n.config.active = set.active;
     parser_n.config.transformations = set.transformations.map(a => ({ ...a }));
@@ -171,7 +184,9 @@ function create_transform_row(a, b, x) {
 function update_sampletext(){
   var edit = document.getElementById("sampletext");
   sampletext.innerHTML = parser_n.transform(parser_n.config.sampletext);
-  sampletext.style.color = '#' + parser_n.config.hex;
+  if(parser_n.config.visibility == true)
+    sampletext.style.color = '#' + vis_correct(parser_n.config.hex);
+  else sampletext.style.color = '#' + parser_n.config.hex;
 }
 
 function list_library(){
@@ -193,6 +208,7 @@ function list_library(){
      parser_n.config.case = Object.create(set.case);
      parser_n.config.format = set.format;
      parser_n.config.sampletext = set.sampletext;
+     parser_n.config.visibility = set.visibility;
      parser_n.config.ref = set.ref;
      parser_n.config.active = set.active;
      parser_n.config.transformations = set.transformations.map(a => ({ ...a }));
@@ -344,6 +360,14 @@ window.onload = async function() {
   var com = document.getElementById("com");
   com.oninput = function update() {
     parser.context.com = com.value;
+    refresh();
+    updateOutput();
+  }
+
+  var com2 = document.getElementById("com2");
+  com2.oninput = function update() {
+    parser.context.com = com2.value;
+    refresh();
     updateOutput();
   }
 
@@ -382,6 +406,7 @@ window.onload = async function() {
 
   sel.onchange = function update() {
     parser.config = parser.library[sel.selectedIndex-1];
+    refresh();
     updateOutput();
   }
 
@@ -523,9 +548,9 @@ window.onload = async function() {
     update_sampletext();
   }
 
-  var hex = document.getElementById("hex-input");
-  hex.oninput = function update() {
-    parser_n.config.hex = hex.value;
+  var hex_input = document.getElementById("hex-input");
+  hex_input.oninput = function update() {
+    parser_n.config.hex = hex_input.value;
     update_sampletext();
   }
 
