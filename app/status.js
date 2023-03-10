@@ -14,6 +14,8 @@ var context_acro;
 var context_handle;
 var user2;
 
+var statcom = '';
+
 var p;
 
 var current = 'ONLINE';
@@ -221,12 +223,12 @@ function refresh(){
 function msg_online(){
   msg_comp(p.config, p.context);
   var res = [];
-  res[0] = color_black + "-- " + close_tag + user + color_black + " is now online! --" + close_tag;
+  res[0] = color_black + "-- " + close_tag + user + color_black + " is now online --" + close_tag;
 
-  if(p.context.com != "")
-  res[0] = p.context.com + " " + res[0];
+  if(statcom!= "")
+  res[0] = statcom + " " + res[0];
 
-  res[1] = `-- ${p.config.handle} [${p.config.acronym}] is now online! --`;
+  res[1] = `-- ${p.config.handle} [${p.config.acronym}] is now online --`;
 
   return res;
 }
@@ -235,12 +237,12 @@ function msg_online(){
 function msg_offline(){
   msg_comp(p.config, p.context);
   var res = [];
-  res[0] = color_black + "-- " + close_tag + user + color_black + " is now offline! --" + close_tag;
+  res[0] = color_black + "-- " + close_tag + user + color_black + " is now offline --" + close_tag;
 
-  if(p.context.com != "")
-  res[0] = p.context.com + " " + res[0];
+  if(statcom != "")
+  res[0] = statcom + " " + res[0];
 
-  res[1] = `-- ${p.config.handle} [${p.config.acronym}] is now offline! --`;
+  res[1] = `-- ${p.config.handle} [${p.config.acronym}] is now offline --`;
 
   return res;
 }
@@ -249,12 +251,12 @@ function msg_offline(){
 function msg_idle(){
   msg_comp(p.config, p.context);
   var res = [];
-  res[0] = color_black + "-- " + close_tag + user + color_black + " is now idle! --" + close_tag;
+  res[0] = color_black + "-- " + close_tag + user + color_black + " is now idle --" + close_tag;
 
-  if(p.context.com != "")
-  res[0] = p.context.com + " " + res[0];
+  if(statcom != "")
+  res[0] = statcom + " " + res[0];
 
-  res[1] = `-- ${p.config.handle} [${p.config.acronym}] is now idle! --`;
+  res[1] = `-- ${p.config.handle} [${p.config.acronym}] is now idle --`;
 
   return res;
 }
@@ -263,12 +265,12 @@ function msg_idle(){
 function msg_offidle(){
   msg_comp(p.config, p.context);
   var res = [];
-  res[0] = color_black + "-- " + close_tag + user + color_black + " is no longer idle! --" + close_tag;
+  res[0] = color_black + "-- " + close_tag + user + color_black + " is no longer idle --" + close_tag;
 
-  if(p.context.com != "")
-  res[0] = p.context.com + " " + res[0];
+  if(statcom != "")
+  res[0] = statcom + " " + res[0];
 
-  res[1] = `-- ${p.config.handle} [${p.config.acronym}] is no longer idle! --`;
+  res[1] = `-- ${p.config.handle} [${p.config.acronym}] is no longer idle --`;
 
   return res;
 }
@@ -286,8 +288,8 @@ function msg_start(){
   " began " + keyverb + "ing " + close_tag + user2 +
   color_black + "  --" + close_tag;
 
-  if(p.context.com != "")
-  res[0] = p.context.com + " " + res[0];
+  if(statcom != "")
+  res[0] = statcom + " " + res[0];
 
   res[1] = `-- ${p.config.handle} [${p.config.acronym}] \
   began ${keyverb}ing ${p.context.sc} [${p.context.tag}] --`;
@@ -306,8 +308,8 @@ function msg_end(config, context){
   " ceased " + keyverb + "ing " + close_tag + user2 +
   color_black + "  --" + close_tag;
 
-  if(p.context.com != "")
-  res[0] = p.context.com + " " + res[0];
+  if(statcom != "")
+  res[0] = statcom + " " + res[0];
 
   res[1] = `-- ${p.config.handle} [${p.config.acronym}] \
   ceased ${keyverb}ing ${p.context.sc} [${p.context.tag}] --`;
@@ -323,8 +325,8 @@ function set_mood(config, context){
   var res = [];
   res[0] = color_black + "-- " + close_tag + user + color_black + " set their mood to " + mood + " --" + close_tag;
 
-  if(p.context.com != "")
-  res[0] = p.context.com + " " + res[0];
+  if(statcom != "")
+  res[0] = statcom + " " + res[0];
 
   res[1] = `-- ${p.config.handle} [${p.config.acronym}] set their mood to ${mood} --`;
 
@@ -339,8 +341,8 @@ function msg_request(config, context){
   var res = [];
   res[0] = color_black + "-- " + close_tag + user + color_black + " REQUESTED to " + keyverb + " " + close_tag + user2 + color_black + " --" + close_tag;
 
-  if(p.context.com != "")
-  res[0] = p.context.com + " " + res[0];
+  if(statcom != "")
+  res[0] = statcom + " " + res[0];
 
   res[1] = `-- ${p.config.handle} [${p.config.acronym}] REQUESTED to ${keyverb} ${p.context.sc} [${p.context.tag}] --`;
 
@@ -354,8 +356,8 @@ function msg_accept(config, context){
   var res = [];
   res[0] = color_black + "-- " + close_tag + user + color_black + " accepted " + close_tag + user2 + color_black + "'s request --" + close_tag;
 
-  if(p.context.com != "")
-  res[0] = p.context.com + " " + res[0];
+  if(statcom != "")
+  res[0] = statcom + " " + res[0];
 
   res[1] = `-- ${p.config.handle} [${p.config.acronym}] ACCEPTED ${p.context.sc} [${p.context.tag}]'s request --`;
 
@@ -369,8 +371,8 @@ function msg_block(config, context){
   var res = [];
   res[0] = color_black + "-- " + close_tag + user + color_black + " blocked " + close_tag + user2 + color_black + " --" + close_tag;
 
-  if(p.context.com != "")
-  res[0] = p.context.com + " " + res[0];
+  if(statcom != "")
+  res[0] = statcom + " " + res[0];
 
   res[1] = `-- ${p.config.handle} [${p.config.acronym}] blocked ${p.context.sc} [${p.context.tag}] --`;
 
@@ -384,8 +386,8 @@ function msg_unblock(config, context){
   var res = [];
   res[0] = color_black + "-- " + close_tag + user + color_black + " unblocked " + close_tag + user2 + color_black + " --" + close_tag;
 
-  if(p.context.com != "")
-  res[0] = p.context.com + " " + res[0];
+  if(statcom != "")
+  res[0] = statcom + " " + res[0];
 
   res[1] = `-- ${p.config.handle} [${p.config.acronym}] unblocked ${p.context.sc} [${p.context.tag}] --`;
 
@@ -412,8 +414,8 @@ function msg_file(config, context){
   res[0] = color_black + "-- " + close_tag + user + color_black + " shared a file: "
   + fileset + "! --" + close_tag + paradesc;
 
-  if(p.context.com != "")
-  res[0] = p.context.com + " " + res[0];
+  if(statcom != "")
+  res[0] = statcom + " " + res[0];
 
 
 
@@ -434,8 +436,8 @@ function msg_explode(config, context){
 
   res[0] = color_black + "-- " + close_tag + user + color_black + "'s device "  + device_act + " --" + close_tag;
 
-  if(p.context.com != "")
-  res[0] = p.context.com + " " + res[0];
+  if(statcom != "")
+  res[0] = statcom + " " + res[0];
 
   res[1] = `-- ${p.config.handle} [${p.config.acronym}]'s device ${device_act} --`
 
@@ -450,8 +452,8 @@ function msg_board(config, context){
 
   res[0] = color_black + "-- " + close_tag + user + color_black + " created a board: "+ board_name + " --" + close_tag;
 
-  if(p.context.com != "")
-  res[0] = p.context.com + " " + res[0];
+  if(statcom != "")
+  res[0] = statcom + " " + res[0];
 
   res[1] = `-- ${p.config.handle} [${p.config.acronym}] created a board: ${board_name} --`;
 
@@ -466,8 +468,8 @@ function msg_memo(config, context){
 
   res[0] = color_black + "-- " + close_tag + user + color_black + " opened a memo on board: "+ board_name + " --" + close_tag;
 
-  if(p.context.com != "")
-  res[0] = p.context.com + " " + res[0];
+  if(statcom != "")
+  res[0] = statcom + " " + res[0];
 
   res[1] = `-- ${p.config.handle} [${p.config.acronym}] opened a memo on board: ${board_name} --`;
 
@@ -483,8 +485,8 @@ function msg_invite(config, context){
 
   res[0] = color_black + "-- " + close_tag + user + color_black + " invited " + close_tag + user2 + color_black + " to board: "+ board_name + " --" + close_tag;
 
-  if(p.context.com != "")
-  res[0] = p.context.com + " " + res[0];
+  if(statcom != "")
+  res[0] = statcom + " " + res[0];
 
   res[1] = `-- ${p.config.handle} [${p.config.acronym}] invited ${p.context.sc} [${p.context.tag}] to board: ${board_name} --`;
 
@@ -503,8 +505,8 @@ function msg_join(config, context){
     res[0] = color_black + "-- " + close_tag + user + color_black + " responded to memo on board: " + board_name + " --" + close_tag;
   else res[0] = color_black + "-- " + close_tag + user + color_black + " responded to the memo RIGHT NOW --" + close_tag;
 
-  if(p.context.com != "")
-  res[0] = p.context.com + " " + res[0];
+  if(statcom != "")
+  res[0] = statcom + " " + res[0];
 
   if (board_name != "???")
     res[1] = `-- ${p.config.handle} [${p.config.acronym}] responded to memo on board: ${board_name} --`;
@@ -521,8 +523,8 @@ function msg_change(config, context){
 
   res[0] = color_black + "-- " + close_tag + user + color_black + " is now " + close_tag + user2 + color_black + " --" + close_tag;
 
-  if(p.context.com != "")
-  res[0] = p.context.com + " " + res[0];
+  if(statcom != "")
+  res[0] = statcom + " " + res[0];
 
   res[1] = `-- ${p.config.handle} [${p.config.acronym}] is now ${p.context.sc} [${p.context.tag}] --`;
 
@@ -538,8 +540,8 @@ function msg_custom(config, context){
 
   res[0] = color_black + "-- " + close_tag + user + color_black + " " + custom_text + " --" + close_tag;
 
-  if(p.context.com != "")
-  res[0] = p.context.com + " " + res[0];
+  if(statcom != "")
+  res[0] = statcom + " " + res[0];
 
   res[1] = `-- ${p.config.handle} [${p.config.acronym}] ${custom_text} --`;
 

@@ -6,24 +6,28 @@
  * to expose Node.js functionality from the main process.
  */
 
-//validation for preset ids
+//URGENT
 //add hex to memo board statuses
 //add optional second user to file share and custom statuses
 //server requested/accepted
-//separate or link com and com2 inputs
 
-//global system color setting
+
+//HIGH PRIORITY
+//option to unpin window from being on top
+//global system themes
 //sample text editor input
 //default character setting
 //option to hide presets from list
+//option to "favorite" presets so they appear on top
 //preset editor scrolling
-//font settings
+//clear error messages on change preset or edit preset, show unsaved changes
 //user manual/readme
 //packaging
 
+//LOW PRIORITY
 //display preview/ display color parser
 //choose loaderfile
-//ref image support
+//ref image link support
 //para editor?
 //set default character
 //autoescape transform regexes
@@ -32,6 +36,7 @@
 //adaptive lowercase
 //copy preset
 //transtimeline support for statuses and pms
+//font settings
 
 
 var parser;
@@ -317,6 +322,18 @@ function refresh_library(){
 
 }
 
+function valid_id(current_id, new_id){
+
+  for (var x in parser.library) {
+
+    var zid = parser.library[x].id;
+    if (zid == new_id && zid != current_id){
+      return false;
+    }
+  }
+  return true;
+}
+
 window.onload = async function() {
   parser = await loadparser();
   parser_n = new Parser();
@@ -366,7 +383,7 @@ window.onload = async function() {
 
   var com2 = document.getElementById("com2");
   com2.oninput = function update() {
-    parser.context.com = com2.value;
+    statcom = com2.value;
     refresh();
     updateOutput();
   }
@@ -598,6 +615,16 @@ window.onload = async function() {
       return parser_n.config.id === p.id;
     })
     var source_id = document.getElementById("id-input");
+    var err_msg = document.getElementById("id-error");
+    var save_msg = document.getElementById("msg-save");
+    err_msg.innerHTML = "";
+    save_msg.innerHTML = "";
+
+
+    if(!valid_id(parser_n.config.id, source_id.value)) {
+      err_msg.innerHTML = `ERROR: ID '${source_id.value}' already taken.`;
+      return;
+    }
 
     var source = parser_n.config;
 
@@ -615,6 +642,8 @@ window.onload = async function() {
     save_preset(parser.library);
     refresh_library();
     list_library();
+
+    save_msg.innerHTML = "Saved!";
 
 
   }

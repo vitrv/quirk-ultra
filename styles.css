@@ -85,3 +85,11 @@
   width: 100%;
   float: none;
 }
+
+.error{
+  color: red;
+}
+
+.msg{
+  color: green;
+}
