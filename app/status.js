@@ -7,6 +7,7 @@ var r_bracket = color_black + "]" + close_tag;
 
 var color_tag;
 var context_tag;
+var mem_tag = "[color=#404040]";
 var handle;
 var acro;
 var user;
@@ -111,6 +112,7 @@ function list_status(parser){
   var dv = document.getElementById("dev-input");
 
   var mem = document.getElementById("memo-input");
+  var memc = document.getElementById("color-input");
 
   var cust = document.getElementById("cust-input");
 
@@ -178,6 +180,14 @@ function list_status(parser){
     else
       board_name = mem.value;
 
+    refresh();
+  }
+
+  memc.oninput = function update(){
+    if(memc.value == '')
+      mem_tag = "[color=#404040]";
+    else
+      mem_tag = "[color=#" + memc.value + "]";
     refresh();
   }
 
@@ -466,7 +476,7 @@ function msg_memo(config, context){
   memo_opt.style.display = "block";
   var res = [];
 
-  res[0] = color_black + "-- " + close_tag + user + color_black + " opened a memo on board: "+ board_name + " --" + close_tag;
+  res[0] = color_black + "-- " + close_tag + user + color_black + " opened a memo on board: "+ close_tag + mem_tag + board_name + close_tag + color_black + " --" + close_tag;
 
   if(statcom != "")
   res[0] = statcom + " " + res[0];
@@ -483,7 +493,7 @@ function msg_invite(config, context){
   memo_opt.style.display = "block";
   var res = [];
 
-  res[0] = color_black + "-- " + close_tag + user + color_black + " invited " + close_tag + user2 + color_black + " to board: "+ board_name + " --" + close_tag;
+  res[0] = color_black + "-- " + close_tag + user + color_black + " invited " + close_tag + user2 + color_black + " to board: "+ close_tag + mem_tag + board_name + close_tag + color_black + " --" + close_tag;
 
   if(statcom != "")
   res[0] = statcom + " " + res[0];
@@ -502,7 +512,8 @@ function msg_join(config, context){
   var res = [];
 
   if (board_name != "???")
-    res[0] = color_black + "-- " + close_tag + user + color_black + " responded to memo on board: " + board_name + " --" + close_tag;
+    res[0] = color_black + "-- " + close_tag + user + color_black + " responded to memo on board: " + close_tag + mem_tag + board_name + close_tag + color_black + " --" + close_tag;
+
   else res[0] = color_black + "-- " + close_tag + user + color_black + " responded to the memo RIGHT NOW --" + close_tag;
 
   if(statcom != "")
@@ -535,15 +546,22 @@ function msg_change(config, context){
 // -- x [XX] ??? y [yy] --
 function msg_custom(config, context){
   msg_comp(p.config, p.context);
+  st_opt.style.display = "block";
   cust_opt.style.display = "block";
   var res = [];
 
-  res[0] = color_black + "-- " + close_tag + user + color_black + " " + custom_text + " --" + close_tag;
+  if (p.context.sc != '')
+  res[0] = color_black + "-- " + close_tag + user + color_black + " " + custom_text + " " + close_tag + user2 + color_black + " --" + close_tag;
+
+  else res[0] = color_black + "-- " + close_tag + user + color_black + " " + custom_text + " --" + close_tag;
 
   if(statcom != "")
   res[0] = statcom + " " + res[0];
 
-  res[1] = `-- ${p.config.handle} [${p.config.acronym}] ${custom_text} --`;
+  if (p.context.sc != '')
+  res[1] = `-- ${p.config.handle} [${p.config.acronym}] ${custom_text} ${p.context.sc} [${p.context.tag}] --`;
+
+  else res[1] = `-- ${p.config.handle} [${p.config.acronym}] ${custom_text} --`;
 
   return res;
 }

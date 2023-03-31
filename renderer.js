@@ -7,12 +7,11 @@
  */
 
 //URGENT
-//add hex to memo board statuses
-//add optional second user to file share and custom statuses
 //server requested/accepted
 
 
 //HIGH PRIORITY
+//config file
 //option to unpin window from being on top
 //global system themes
 //sample text editor input
@@ -37,12 +36,13 @@
 //copy preset
 //transtimeline support for statuses and pms
 //font settings
+//tests?
 
 
 var parser;
 var tab_state = 0;
 var textbox = document.getElementById("text");
-
+var config;
 var parser_n;
 
 function updateOutput() {
@@ -335,6 +335,7 @@ function valid_id(current_id, new_id){
 }
 
 window.onload = async function() {
+  config = new Config();
   parser = await loadparser();
   parser_n = new Parser();
   parser_n.style = new MemoStyle();
@@ -360,6 +361,11 @@ window.onload = async function() {
 
   refresh_library();
   update_editor();
+
+  sel.value = parser.config.id;
+
+  updateOutput();
+
 
   var sel2 = document.getElementById("style");
   let styles = ['No Style', 'Memo Style', 'Script Style', 'BBScript Style',
@@ -437,10 +443,20 @@ window.onload = async function() {
 
   sel_st.onchange = function update() {
     var source = parser.library[sel_st.selectedIndex-1]
-    parser.context.hex = source.hex;
-    parser.context.tag = source.acronym;
-    parser.context.sc = source.handle;
+    if (source == undefined)
+    {
+      parser.context.hex = '';
+      parser.context.tag = '';
+      parser.context.sc = '';
+    }
+    else {
+      parser.context.hex = source.hex;
+      parser.context.tag = source.acronym;
+      parser.context.sc = source.handle;
+    }
     refresh();
+
+
   }
 
   sel2.onchange = function update() {

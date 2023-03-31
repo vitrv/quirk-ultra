@@ -26,8 +26,18 @@ async function loadparser()
 
   //await save_preset(p.library);
 
+  var default_preset = p.library.find((p) => {
+    return config.default == p.id;
+  });
+  if (default_preset == undefined)
+  {
+    p.config = p.library[0];
+  }
+  else {
+    p.config = default_preset;
+  }
 
-  p.config = p.library[0];
+
   return p;
 }
 
