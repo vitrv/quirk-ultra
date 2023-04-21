@@ -23,8 +23,8 @@ async function loadparser()
   // for (var x in presets2.presets){
   //    load_preset(presets2.presets[x], p.library);
   // }
-
-  //await save_preset(p.library);
+  //
+  // await save_preset(p.library);
 
   var default_preset = p.library.find((p) => {
     return config.default == p.id;
@@ -37,7 +37,6 @@ async function loadparser()
     p.config = default_preset;
   }
 
-
   return p;
 }
 
@@ -45,6 +44,9 @@ function load_preset(set, library){
 
   let preset = new Base(set.id, set.name, set.handle, set.acronym, set.hex);
   preset.format = set.format;
+  preset.favorite = set.favorite;
+  preset.active = set.active;
+  preset.ref = set.ref;
   if(set.visibility != null){
     preset.visibility = set.visibility;
   }
@@ -105,6 +107,9 @@ async function save_preset(library){
           "format": set.format,
           "case": write_case(set.case),
           "sampletext": set.sampletext,
+          "ref": set.ref,
+          "favorite": set.favorite,
+          "active": set.active,
           "visibility": set.visibility
 
     };

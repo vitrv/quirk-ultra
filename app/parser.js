@@ -42,6 +42,7 @@ class Base {
     this.case = new Caps();
     this.sampletext = "The quick brown fox jumps over the lazy dog."
     this.ref = "";
+    this.favorite = false;
     this.active = true;
     this.visibility = false;
   }

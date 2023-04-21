@@ -52,6 +52,8 @@ var statuses = {
   "MEMO INVITE": msg_invite,
   "MEMO JOIN": msg_join,
   "CHANGE HANDLE": msg_change,
+  "SERVER REQUEST": serv_req,
+  "SERVER ACCEPT": serv_accept,
   "CUSTOM": msg_custom
 };
 
@@ -538,6 +540,39 @@ function msg_change(config, context){
   res[0] = statcom + " " + res[0];
 
   res[1] = `-- ${p.config.handle} [${p.config.acronym}] is now ${p.context.sc} [${p.context.tag}] --`;
+
+  return res;
+}
+
+// -- x [XX] requested to server y [yy] --
+function serv_req(config, context){
+  msg_comp(p.config, p.context);
+  st_opt.style.display = "block";
+  var res = [];
+
+  res[0] = color_black + "-- " + close_tag + user + color_black + " requested to server " + close_tag + user2 + color_black + " --" + close_tag;
+
+  if(statcom != "")
+  res[0] = statcom + " " + res[0];
+
+  res[1] = `-- ${p.config.handle} [${p.config.acronym}] requested to server ${p.context.sc} [${p.context.tag}] --`;
+
+  return res;
+}
+
+
+// -- x [XX] accepted y [yy]'s request' --
+function serv_accept(config, context){
+  msg_comp(p.config, p.context);
+  st_opt.style.display = "block";
+  var res = [];
+
+  res[0] = color_black + "-- " + close_tag + user + color_black + " accepted " + close_tag + user2 + color_black + "'s request --" + close_tag;
+
+  if(statcom != "")
+  res[0] = statcom + " " + res[0];
+
+  res[1] = `-- ${p.config.handle} [${p.config.acronym}] accepted ${p.context.sc} [${p.context.tag}]'s request' --`;
 
   return res;
 }

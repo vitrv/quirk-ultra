@@ -6,22 +6,18 @@
  * to expose Node.js functionality from the main process.
  */
 
-//URGENT
-//server requested/accepted
-
-
 //HIGH PRIORITY
-//config file
-//option to unpin window from being on top
-//global system themes
-//sample text editor input
-//default character setting
-//option to hide presets from list
-//option to "favorite" presets so they appear on top
-//preset editor scrolling
-//clear error messages on change preset or edit preset, show unsaved changes
+//put advanced editor options in togglable tab
+//better color correction
+//clean up css spacing on editor interface
+//make config file usable
+ //default preset
+ //system color
+ //data location
 //user manual/readme
+// have better names for format styles
 //packaging
+  // prepackage preset library
 
 //LOW PRIORITY
 //display preview/ display color parser
@@ -36,7 +32,10 @@
 //copy preset
 //transtimeline support for statuses and pms
 //font settings
+//global system themes
 //tests?
+//fix preset editor scrolling
+//preview bbcode
 
 
 var parser;
@@ -102,6 +101,8 @@ function tab_swap() {
 
 function update_editor(){
 
+  var save_msg = document.getElementById("msg-save");
+  save_msg.innerHTML = '';
   if (parser_n.config.id == null)
   {
 
@@ -114,6 +115,8 @@ function update_editor(){
     parser_n.config.visibility = set.visibility;
     parser_n.config.ref = set.ref;
     parser_n.config.active = set.active;
+    parser_n.config.visibility = set.visibility;
+    parser_n.config.favorite = set.favorite;
     parser_n.config.transformations = set.transformations.map(a => ({ ...a }));
 
   }
@@ -129,6 +132,17 @@ function update_editor(){
   acro.value = parser_n.config.acronym;
   var hex = document.getElementById("hex-input");
   hex.value = parser_n.config.hex;
+
+  var fav = document.getElementById("favorite");
+  fav.checked = parser_n.config.favorite;
+  var active = document.getElementById("active");
+  active.checked = parser_n.config.active;
+  var sample = document.getElementById("sampletext-input");
+  sample.value = parser_n.config.sampletext;
+  var vismode = document.getElementById("cc");
+  vismode.checked = parser_n.config.visibility;
+  var reflink = document.getElementById("ref");
+  reflink.value = parser_n.config.ref;
 
   const index = parser_n.config.format.indexOf("${t}");
   var format1 = parser_n.config.format.slice(0, index);
@@ -216,6 +230,8 @@ function list_library(){
      parser_n.config.visibility = set.visibility;
      parser_n.config.ref = set.ref;
      parser_n.config.active = set.active;
+     parser_n.config.visibility = set.visibility;
+     parser_n.config.favorite = set.favorite;
      parser_n.config.transformations = set.transformations.map(a => ({ ...a }));
 
      update_editor();
@@ -305,11 +321,22 @@ function refresh_library(){
   sel_arg.options[0] = new Option("select", "select")
   sel_st.options[0] = new Option("select", "select")
 
-
+//favorites
   for (var x in parser.library) {
-    sel.options[sel.options.length] = new Option(parser.library[x].id, parser.library[x].id);
-    sel_arg.options[sel_arg.options.length] = new Option(parser.library[x].id, parser.library[x].id);
-    sel_st.options[sel_st.options.length] = new Option(parser.library[x].id, parser.library[x].id);
+    if(parser.library[x].favorite && parser.library[x].active){
+      sel.options[sel.options.length] = new Option(parser.library[x].id, parser.library[x].id);
+      sel_arg.options[sel_arg.options.length] = new Option(parser.library[x].id, parser.library[x].id);
+      sel_st.options[sel_st.options.length] = new Option(parser.library[x].id, parser.library[x].id);
+    }
+  }
+
+//active
+  for (var x in parser.library) {
+    if(parser.library[x].active && !parser.library[x].favorite){
+      sel.options[sel.options.length] = new Option(parser.library[x].id, parser.library[x].id);
+      sel_arg.options[sel_arg.options.length] = new Option(parser.library[x].id, parser.library[x].id);
+      sel_st.options[sel_st.options.length] = new Option(parser.library[x].id, parser.library[x].id);
+    }
   }
 
   parser.config = parser.library.find((p) => {
@@ -358,6 +385,8 @@ window.onload = async function() {
   var sel = document.getElementById("preset");
   var sel_arg = document.getElementById("arg-preset");
   var sel_st = document.getElementById("st-preset");
+
+  var save_msg = document.getElementById("msg-save");
 
   refresh_library();
   update_editor();
@@ -428,13 +457,17 @@ window.onload = async function() {
   }
 
   sel.onchange = function update() {
-    parser.config = parser.library[sel.selectedIndex-1];
+    parser.config = parser.library.find((p) => {
+      return sel.value == p.id;
+    })
     refresh();
     updateOutput();
   }
 
   sel_arg.onchange = function update() {
-    var source = parser.library[sel_arg.selectedIndex-1]
+    var source = parser.library.find((p) => {
+      return sel_arg.value == p.id;
+    })
     parser.context.hex = source.hex;
     parser.context.tag = source.acronym;
     parser.context.sc = source.handle;
@@ -442,7 +475,9 @@ window.onload = async function() {
   }
 
   sel_st.onchange = function update() {
-    var source = parser.library[sel_st.selectedIndex-1]
+    var source = parser.library.find((p) => {
+      return sel_st.value == p.id;
+    })
     if (source == undefined)
     {
       parser.context.hex = '';
@@ -567,30 +602,35 @@ window.onload = async function() {
   name.oninput = function update() {
     parser_n.config.name = name.value;
     update_sampletext();
+    save_msg.innerHTML = 'Unsaved changes';
   }
 
   var handle = document.getElementById("handle-input");
   handle.oninput = function update() {
     parser_n.config.handle = handle.value;
     update_sampletext();
+    save_msg.innerHTML = 'Unsaved changes';
   }
 
   var acro = document.getElementById("acro-input");
   acro.oninput = function update() {
     parser_n.config.acronym = acro.value;
     update_sampletext();
+    save_msg.innerHTML = 'Unsaved changes';
   }
 
   var hex_input = document.getElementById("hex-input");
   hex_input.oninput = function update() {
     parser_n.config.hex = hex_input.value;
     update_sampletext();
+    save_msg.innerHTML = 'Unsaved changes';
   }
 
   var caps = document.getElementById("case-input");
   caps.onchange = function update() {
     parser_n.config.case = case_factory(caps.value);
     update_sampletext();
+    save_msg.innerHTML = 'Unsaved changes';
   }
 
   var prefix = document.getElementById("prefix-input");
@@ -600,6 +640,7 @@ window.onload = async function() {
 
     parser_n.config.format = prefix.value + "${t}" + format2;
     update_sampletext();
+    save_msg.innerHTML = 'Unsaved changes';
 
   }
 
@@ -610,18 +651,56 @@ window.onload = async function() {
 
     parser_n.config.format = format1 + "${t}" + suffix.value;
     update_sampletext();
+    save_msg.innerHTML = 'Unsaved changes';
   }
+
+  var sample_input = document.getElementById("sampletext-input");
+  sample_input.oninput = function update() {
+    parser_n.config.sampletext = sample_input.value;
+    update_sampletext();
+    save_msg.innerHTML = 'Unsaved changes';
+  }
+
+  var fav = document.getElementById("favorite");
+  fav.onchange = function update() {
+    parser_n.config.favorite = fav.checked;
+    save_msg.innerHTML = 'Unsaved changes';
+  }
+
+  var active = document.getElementById("active");
+  active.onchange = function update() {
+    parser_n.config.active = active.checked;
+    save_msg.innerHTML = 'Unsaved changes';
+  }
+
+  var vismode = document.getElementById("cc");
+  vismode.oninput = function update() {
+    parser_n.config.visibility = vismode.checked;
+    update_sampletext();
+    save_msg.innerHTML = 'Unsaved changes';
+  }
+
+  var reflink = document.getElementById("ref");
+  reflink.oninput = function update() {
+    parser_n.config.ref = reflink.value;
+    update_sampletext();
+    save_msg.innerHTML = 'Unsaved changes';
+  }
+
 
   var tf_add = document.getElementById("add-transform-row");
   tf_add.onclick = function update() {
     parser_n.config.transformations.push([new RegExp("", 'g'), ""]);
     update_editor();
+    save_msg.innerHTML = 'Unsaved changes';
+
   }
 
   var tf_del = document.getElementById("del-transform-row");
   tf_del.onclick = function update() {
     parser_n.config.transformations.pop();
     update_editor();
+    save_msg.innerHTML = 'Unsaved changes';
   }
 
   var psave = document.getElementById("save-preset");
@@ -651,6 +730,8 @@ window.onload = async function() {
     set.sampletext = source.sampletext;
     set.ref = source.ref;
     set.active = source.active;
+    set.favorite = source.favorite;
+    set.visibility = source.visibility;
     set.transformations = source.transformations.map(a => ({ ...a }));
 
     parser_n.config.id = source_id.value;
