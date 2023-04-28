@@ -5,6 +5,14 @@
 
 }
 
+/* .output-frame{
+  outline-style: solid;
+  outline-color: #999999;
+  outline-width: 1px;
+  min-height: 50px;
+  width: 30rem;
+} */
+
 .style-header {
   height: 50px;
   padding:10px;
@@ -37,6 +45,9 @@
   padding-bottom: 15px;
 }
 
+.adv-options {
+  margin-bottom: 20px;
+}
 
 .library-bar {
   width: 20%;

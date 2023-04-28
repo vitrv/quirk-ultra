@@ -1,8 +1,10 @@
 {
-  "pinned-to-top": true,
-  "dark-mode": true,
-  "default-preset": "KALIAS",
-  "library-file": "",
-  "system-msg-color": ""
+  "pinned_to_top": true,
+  "dark_mode": true,
+  "default_preset": "ZELTER",
+  "data_location": "/app/data/test.json",
+  "system_msg_color": "404040",
+  "debug": true,
+  "show_secret_settings": true
 
 }

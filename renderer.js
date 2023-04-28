@@ -7,35 +7,23 @@
  */
 
 //HIGH PRIORITY
-//put advanced editor options in togglable tab
 //better color correction
-//clean up css spacing on editor interface
-//make config file usable
- //default preset
- //system color
- //data location
 //user manual/readme
 // have better names for format styles
-//packaging
-  // prepackage preset library
 
 //LOW PRIORITY
 //display preview/ display color parser
-//choose loaderfile
 //ref image link support
 //para editor?
-//set default character
-//autoescape transform regexes
-//test editor backing copy
-//advanced options setting?
 //adaptive lowercase
 //copy preset
 //transtimeline support for statuses and pms
-//font settings
-//global system themes
+//fonts
+//light mode
 //tests?
 //fix preset editor scrolling
-//preview bbcode
+//preview bbcode for statuses
+//add custom text to canon preset library
 
 
 var parser;
@@ -59,11 +47,25 @@ function copy_text() {
   copyText.select();
   copyText.setSelectionRange(0, 99999);
   document.execCommand("copy");
+
+  // var out = document.getElementById("output");
+  // var copyItem = document.createElement("span");
+  // copyItem.style.color = out.style.color;
+  // copyItem.innerHTML = out.innerHTML;
+  //
+  // navigator.clipboard.writeText(copyItem.outerText);
+
+
 }
 
 function vis_correct(c) {
-  var correction = '404040';
-  var hexStr = (parseInt(c, 16) + parseInt(correction, 16)).toString(16);
+  // var correction = '454545';
+  // var hexStr = (parseInt(c, 16) + parseInt(correction, 16)).toString(16);
+  // while (hexStr.length < 6) { hexStr = '0' + hexStr; } // Zero pad.
+  // return hexStr;
+
+  var correction = '303030';
+  var hexStr = (parseInt(c, 16) + parseInt(c, 16) + parseInt(correction, 16)).toString(16);
   while (hexStr.length < 6) { hexStr = '0' + hexStr; } // Zero pad.
   return hexStr;
 }
@@ -363,6 +365,7 @@ function valid_id(current_id, new_id){
 
 window.onload = async function() {
   config = new Config();
+  await config.load_config();
   parser = await loadparser();
   parser_n = new Parser();
   parser_n.style = new MemoStyle();
@@ -653,6 +656,14 @@ window.onload = async function() {
     update_sampletext();
     save_msg.innerHTML = 'Unsaved changes';
   }
+
+
+  if (!config.show_secret_settings)
+  {
+      var secret_settings = document.getElementById("adv-options");
+      secret_settings.style.display = 'none';
+  }
+
 
   var sample_input = document.getElementById("sampletext-input");
   sample_input.oninput = function update() {

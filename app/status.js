@@ -1,13 +1,13 @@
-//var color_black = "[color=#000000]";
-var color_black = "[color=#404040]";
-var close_tag = "[/color]"
-
-var l_bracket = color_black + "[" + close_tag;
-var r_bracket = color_black + "]" + close_tag;
-
+var system_color = '404040';
 var color_tag;
 var context_tag;
-var mem_tag = "[color=#404040]";
+
+var color_black;
+var close_tag;
+var l_bracket;
+var r_bracket;
+var mem_tag;
+
 var handle;
 var acro;
 var user;
@@ -74,6 +74,12 @@ var cust_opt = document.getElementById("cust-opt");
 //assembles reusable message components
 function msg_comp(config, context)
 {
+  color_black = "[color=#"+ system_color + "]";
+  close_tag = "[/color]"
+  l_bracket = color_black + "[" + close_tag;
+  r_bracket = color_black + "]" + close_tag;
+  mem_tag = "[color=#" + system_color + "]";
+
   st_opt.style.display = "none";
   ks_opt.style.display = "none";
   mood_opt.style.display = "none";
@@ -94,6 +100,7 @@ function msg_comp(config, context)
 
 function list_status(parser){
 
+  system_color = config.sys_color;
   p = parser;
 
   var lib = document.getElementById("status-lib");
@@ -187,7 +194,7 @@ function list_status(parser){
 
   memc.oninput = function update(){
     if(memc.value == '')
-      mem_tag = "[color=#404040]";
+      mem_tag = "[color=#"+ system_color + "]";
     else
       mem_tag = "[color=#" + memc.value + "]";
     refresh();

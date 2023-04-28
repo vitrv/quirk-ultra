@@ -6,7 +6,7 @@ async function loadparser()
 
   p.style = new MemoStyle();
 
-  let presets = await fetch_data('./app/data/test.json');
+  let presets = await fetch_data('.' + config.path);
   for (var x in presets.presets){
       load_preset(presets.presets[x], p.library);
   }
@@ -92,7 +92,11 @@ function load_preset(set, library){
 
 async function save_preset(library){
 
-  var path = "./app/data/test.json";
+
+  if(!config.debug){
+    path = "./resources/app" + config.data_location;
+  }
+  else {path = "." + config.data_location;}
 
   const content = {"presets" : []};
   for (var x in library){
