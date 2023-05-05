@@ -8,12 +8,15 @@
     <title>Quirk Ultra</title>
   </head>
   <body>
-    <div id="navbar">
+
+    <div class="navbar" id="navbar">
       <button id="nav-main">MAIN</button>
       <button id="nav-status">STATUS</button>
       <button id="nav-preset">PRESETS</button>
       <button id="nav-settings" style="display:none" >SETTINGS</button>
+      <div class='nav-select'></div>
     </div>
+
 
     <div id="tab-main">
       <div id="toolbar">
@@ -46,11 +49,11 @@
       </div>
 
       <div class="input-frame" id="input-text">
-        <textarea id="text" name="text" rows="10" cols="90" placeholder="write here"></textarea>
+        <textarea id="text" rows="2" cols="80" placeholder="write here"></textarea>
       </div>
 
       <div class="output-frame" id="output-text">
-        <textarea id=output rows="10" cols="90" readonly> </textarea>
+        <textarea id=output rows="2" cols="80" readonly> </textarea>
       </div>
       <textarea id="com" class="com" type="text" name="com" cols="3" placeholder="/"></textarea>
       <button id="copy">copy</button>

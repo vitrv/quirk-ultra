@@ -6,13 +6,10 @@ const fs = require('fs')
 function createWindow () {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 800,
-    height: 600,
-    webPreferences: { zoomFactor: 1.0, nodeIntegration: true, backgroundThrottling: false }
-    //webPreferences: {
-    //   nodeIntegration: true
-    //   //preload: path.join(__dirname, 'preload.js')
-    // }
+    frame: false,
+    width: 720,
+    height: 240,
+    webPreferences: { zoomFactor: 1.0, nodeIntegration: true, contextIsolation: false, backgroundThrottling: false }
   })
 //load the index.html of the app.
   mainWindow.loadURL(`file://${__dirname}/index.html`)

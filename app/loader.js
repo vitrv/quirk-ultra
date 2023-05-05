@@ -94,9 +94,9 @@ async function save_preset(library){
 
 
   if(!config.debug){
-    path = "./resources/app" + config.data_location;
+    path = "./resources/app" + config.path;
   }
-  else {path = "." + config.data_location;}
+  else {path = "." + config.path;}
 
   const content = {"presets" : []};
   for (var x in library){

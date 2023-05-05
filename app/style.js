@@ -171,7 +171,7 @@ Unspoilerized pms with tags on every line
 class PMStrongStyle extends Style {
   constructor() {
     super();
-    this.description_text = "Unspoilered chat messages, with BBCode styled color and line breaks and PM tags on every line, " +
+    this.description_text = "Unspoilered chat messages, with BBCode styled color, line breaks and PM tags on every line, " +
     "intended for use as script style private messages."
 
   }
@@ -184,7 +184,38 @@ class PMStrongStyle extends Style {
 
     lineArr.forEach((item, i) => {
 
-    lineArr[i] = lineArr[i] + " " + lbracket + tag + rbracket;
+    lineArr[i] = lbracket + tag + rbracket + " " + lineArr[i] ;
+    if(i != lineArr.length-1) {
+        lineArr[i] = lineArr[i] + '[br]';
+    }
+    lineArr[i] = this.transform(lineArr[i], config, context);
+    });
+
+    return lineArr;
+
+  }
+  transform(line, b, context){
+    return b.acronym + ": " + line;
+  }
+}
+
+class PMLine extends Style {
+  constructor() {
+    super();
+    this.description_text = "Line by line spoilered chat messages, with BBCode styled color, line breaks and PM tags on every line, " +
+    "intended for use as script style private messages."
+
+  }
+  stylize(lineArr, config, context){
+
+    let lbracket = this.color_black + "[[/color]";
+    let rbracket = this.color_black + "][/color]";
+    let tag = "[color=#" + context.hex + "]" + context.tag  + "[/color]";
+
+
+    lineArr.forEach((item, i) => {
+
+    lineArr[i] = lbracket + tag + rbracket + " " + '[SPOILER]' + lineArr[i] + '[/SPOILER]';
     if(i != lineArr.length-1) {
         lineArr[i] = lineArr[i] + '[br]';
     }

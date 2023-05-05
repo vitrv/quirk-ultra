@@ -6,26 +6,6 @@
  * to expose Node.js functionality from the main process.
  */
 
-//HIGH PRIORITY
-//better color correction
-//user manual/readme
-// have better names for format styles
-
-//LOW PRIORITY
-//display preview/ display color parser
-//ref image link support
-//para editor?
-//adaptive lowercase
-//copy preset
-//transtimeline support for statuses and pms
-//fonts
-//light mode
-//tests?
-//fix preset editor scrolling
-//preview bbcode for statuses
-//add custom text to canon preset library
-
-
 var parser;
 var tab_state = 0;
 var textbox = document.getElementById("text");
@@ -400,8 +380,8 @@ window.onload = async function() {
 
 
   var sel2 = document.getElementById("style");
-  let styles = ['No Style', 'Memo Style', 'Script Style', 'BBScript Style',
-  "BBMemo Style", 'PM Style', 'PM Strong Style', 'Discord Style', 'Block Style',
+  let styles = ['No Style', 'Memo', 'Script', 'BBScript',
+  "BBMemo", 'PM', 'PM (Block)', 'PM (Line by line)', 'Discord Style', 'Block Style',
   "PMFreeform Style"]
 
   for (var s in styles) {
@@ -504,47 +484,52 @@ window.onload = async function() {
         opt.style.display = "none";
         opt2.style.display = "none";
         break;
-      case ("Memo Style"):
+      case ("Memo"):
         parser.style = new MemoStyle();
         opt.style.display = "none";
         opt2.style.display = "none";
         break;
-      case ("Script Style"):
+      case ("Script"):
         parser.style = new ScriptStyle();
         opt.style.display = "none";
         opt2.style.display = "none";
         break;
-      case ("BBScript Style"):
+      case ("BBScript"):
         parser.style = new BBScriptStyle();
         opt.style.display = "none";
         opt2.style.display = "none";
         break;
-      case ("PM Style"):
+      case ("PM"):
         parser.style = new PMStyle();
         opt.style.display = "block";
         opt2.style.display = "none";
         break;
-      case ("Discord Style"):
+      case ("Discord"):
         parser.style = new DiscordStyle();
         opt.style.display = "none";
         opt2.style.display = "none";
         break;
-      case ("BBMemo Style"):
+      case ("BBMemo"):
         parser.style = new BBMemoStyle();
         opt.style.display = "none";
         opt2.style.display = "none";
         break;
-      case ("PM Strong Style"):
+      case ("PM (Block)"):
         parser.style = new PMStrongStyle();
         opt.style.display = "block";
         opt2.style.display = "none";
         break;
-      case ("Block Style"):
+      case ("PM (Line by line)"):
+        parser.style = new PMLine();
+        opt.style.display = "block";
+        opt2.style.display = "none";
+        break;
+      case ("Block"):
         parser.style = new BlockStyle();
         opt.style.display = "none";
         opt2.style.display = "none";
         break;
-      case ("PMFreeform Style"):
+      case ("PMFreeform"):
         parser.style = new PMFreeformStyle();
         opt.style.display = "none";
         opt2.style.display = "block";
