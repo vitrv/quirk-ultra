@@ -49,11 +49,11 @@
       </div>
 
       <div class="input-frame" id="input-text">
-        <textarea id="text" rows="2" cols="80" placeholder="write here"></textarea>
+        <textarea id="text" rows="4" cols="80" placeholder="write here"></textarea>
       </div>
 
       <div class="output-frame" id="output-text">
-        <textarea id=output rows="2" cols="80" readonly> </textarea>
+        <textarea id=output rows="4" cols="80" readonly> </textarea>
       </div>
       <textarea id="com" class="com" type="text" name="com" cols="3" placeholder="/"></textarea>
       <button id="copy">copy</button>
@@ -110,8 +110,11 @@
             <textarea id="cust-input" class="tag" type="text" name="com" cols="48" placeholder="transferred 99,999 BOONBUCKS!"></textarea>
           </div>
 
-       <div id="status-prev" class="status-prev"></div>
-       <div class="status-code"><textarea id="status-code" name="text" rows="4" cols="40" readonly></textarea></div>
+       <div class="preview-line">
+         <div id="status-prev" class="status-prev"></div>
+         <button id="copy-prev" class="copy-prev">copy</button>
+       </div>
+       <div class="status-code"><textarea id="status-code" name="text" rows="2" cols="60" readonly></textarea></div>
        <textarea id="com2" class="com" type="text" name="com" cols="3" placeholder="/"></textarea>
        <button id="copy-status">copy</button>
     </div>

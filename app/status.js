@@ -228,6 +228,10 @@ function list_status(parser){
   cp.onclick = function copy_output(){
     copy_stat();
   }
+  var cp2 = document.getElementById("copy-prev");
+  cp2.onclick = function copy_output(){
+    copy_stat2();
+  }
 }
 
 function refresh(){
@@ -614,4 +618,10 @@ function copy_stat() {
   copyText.select();
   copyText.setSelectionRange(0, 99999);
   document.execCommand("copy");
+}
+
+
+function copy_stat2() {
+  var copyItem = document.getElementById('status-prev');
+  navigator.clipboard.writeText(copyItem.outerText);
 }

@@ -11,21 +11,6 @@ async function loadparser()
       load_preset(presets.presets[x], p.library);
   }
 
-  // let presets = await fetch_data('./app/data/canon-1.json');
-  //
-  //
-  // for (var x in presets.presets){
-  //    load_preset(presets.presets[x], p.library);
-  // }
-  //
-  // let presets2 = await fetch_data('./app/data/frost-1.json');
-  //
-  // for (var x in presets2.presets){
-  //    load_preset(presets2.presets[x], p.library);
-  // }
-  //
-  // await save_preset(p.library);
-
   var default_preset = p.library.find((p) => {
     return config.default == p.id;
   });
@@ -120,7 +105,7 @@ async function save_preset(library){
     content.presets.push(entry);
   }
 
-  fs.writeFile(path, JSON.stringify(content), err => {
+  fs.writeFile(path, JSON.stringify(content, null, "\t"), err => {
     if (err) {
       console.error(err);
     }

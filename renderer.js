@@ -381,8 +381,8 @@ window.onload = async function() {
 
   var sel2 = document.getElementById("style");
   let styles = ['No Style', 'Memo', 'Script', 'BBScript',
-  "BBMemo", 'PM', 'PM (Block)', 'PM (Line by line)', 'Discord Style', 'Block Style',
-  "PMFreeform Style"]
+  "BBMemo", 'PM', 'PM (Block)', 'PM (Line by line)', 'Discord', 'Block',
+  "Freeform"]
 
   for (var s in styles) {
     sel2.options[sel2.options.length] = new Option(styles[s], styles[s]);
@@ -529,7 +529,7 @@ window.onload = async function() {
         opt.style.display = "none";
         opt2.style.display = "none";
         break;
-      case ("PMFreeform"):
+      case ("Freeform"):
         parser.style = new PMFreeformStyle();
         opt.style.display = "none";
         opt2.style.display = "block";

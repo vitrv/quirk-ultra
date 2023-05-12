@@ -84,15 +84,28 @@
 
 
 .status-view {
-  width: 50%;
+  width: 60%;
   float: left;
   padding: 10px;
 }
 
-.status-prev, .status-code{
-  padding-top: 20px;
-  padding-bottom: 20px;
+.status-prev, .status-code {
+  padding-top: 5px;
+  padding-bottom: 5px;
 
+}
+
+.preview-line {
+  margin-bottom: 20px;
+}
+
+.status-prev {
+  width: 80%;
+  float: left;
+}
+
+.copy-prev {
+  float: left;
 }
 
 .editor {

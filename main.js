@@ -8,7 +8,7 @@ function createWindow () {
   const mainWindow = new BrowserWindow({
     frame: false,
     width: 720,
-    height: 240,
+    height: 290,
     webPreferences: { zoomFactor: 1.0, nodeIntegration: true, contextIsolation: false, backgroundThrottling: false }
   })
 //load the index.html of the app.
