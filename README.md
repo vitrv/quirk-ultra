@@ -20,9 +20,11 @@ Click here to make your own custom preset, or edit an existing one
 The rest of the preset editor works much like PARP.
 
 A known bug right now is that the characters `>` `<` and `&` cause problems when used as quirk replacements. A workaround is to use the following HTML entity codes instead:
-`>` - &gt;
-`<` - &lt;
-`&` - &amp;
+`>` - `&gt;`
+
+`<` - `&lt;`
+
+`&` - `&amp;`
 
 Further advanced and experimental settings can be configured in "app/app/data/config.json" but I will leave this to be explored by the more code savvy.
 
