@@ -1,39 +1,30 @@
-# electron-quick-start
+# Quickstart
 
-**Clone and run for a quick way to see Electron in action.**
+Download and extract the zip file in releases and run "Quirk Ultra.exe" to start. That's it.
 
-This is a minimal Electron application based on the [Quick Start Guide](https://electronjs.org/docs/latest/tutorial/quick-start) within the Electron documentation.
+The GUI looks like this:
 
-A basic Electron application needs just these files:
+![a1](https://github.com/user-attachments/assets/3407212a-f339-4cec-aec1-b27d53bd200b)
 
-- `package.json` - Points to the app's main file and lists its details and dependencies.
-- `main.js` - Starts the app and creates a browser window to render HTML. This is the app's **main process**.
-- `index.html` - A web page to render. This is the app's **renderer process**.
-- `preload.js` - A content script that runs before the renderer process loads.
+1. Dropdown menu of all currently loaded character presets.
+2. Dropdown menu of all formatting styles
+3. Click and drag bar. The app is always pinned to the top of all open windows by default, but can be minimized and closed by right clicking here
+4. Enter text to be formatted here.
+5. Preview pane.
+6. Command input. Anything entered here will be prefixed before the entire message and formatting, which makes it useful for adding PARP commands or Tupperbox triggers.
+7. Copies to the user's clipboard for easy copy and pasting.
 
-You can learn more about each of these components in depth within the [Tutorial](https://electronjs.org/docs/latest/tutorial/tutorial-prerequisites).
+Click here to make your own custom preset, or edit an existing one
+![a2](https://github.com/user-attachments/assets/1e3a289b-e1c0-4d4c-a774-dfb33a6bb2ae)
 
-## To Use
+The rest of the preset editor works much like PARP.
 
-To clone and run this repository you'll need [Git](https://git-scm.com) and [Node.js](https://nodejs.org/en/download/) (which comes with [npm](http://npmjs.com)) installed on your computer. From your command line:
+A known bug right now is that the characters `>` `<` and `&` cause problems when used as quirk replacements. A workaround is to use the following HTML entity codes instead:
+`>` - &gt;
+`<` - &lt;
+`&` - &amp;
 
-```bash
-# Clone this repository
-git clone https://github.com/electron/electron-quick-start
-# Go into the repository
-cd electron-quick-start
-# Install dependencies
-npm install
-# Run the app
-npm start
-```
-
-Note: If you're using Linux Bash for Windows, [see this guide](https://www.howtogeek.com/261575/how-to-run-graphical-linux-desktop-applications-from-windows-10s-bash-shell/) or use `node` from the command prompt.
-
-## Resources for Learning Electron
-
-- [electronjs.org/docs](https://electronjs.org/docs) - all of Electron's documentation
-- [Electron Fiddle](https://electronjs.org/fiddle) - Electron Fiddle, an app to test small Electron experiments
+Further advanced and experimental settings can be configured in "app/app/data/config.json" but I will leave this to be explored by the more code savvy.
 
 ## License
 
